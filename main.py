@@ -9,6 +9,8 @@ from menu import*
 
 class Question():
     current = None
+    count_ans = 0
+    count_right_ans = 0
 
     def __init__(self, text, right_ans, ans2, ans3, ans4):
         self.text = text
@@ -45,7 +47,9 @@ def next_question():
 
 
 def check_answer():
+    Question.count_ans += 1
     if radio_list[0].isChecked():
+        Question.count_right_ans += 1
         result_text.setText("Правильно")
     else:
         result_text.setText("Неправильно")
@@ -69,6 +73,13 @@ def answer_click():
         answer_btn.setText("Відповісти")
         
 def show_menu():
+    count_lb.setText("Разів відповіли: " + str(Question.count_ans))
+    right_lb.setText("Правильних відповідей: " + str(Question.count_right_ans))
+    try:
+        success = round(Question.count_right_ans / Question.count_ans * 100)
+    except:
+        success = 0
+        succes_lb.setText("Успішність:" + str(success))
     win.hide()
     menu_win.show()
 
